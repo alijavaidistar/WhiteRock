@@ -1,8 +1,1 @@
-# WhiteRock
-Software Design Project
-
-# Team Members
-Ali Javaid
-Naim Momin
-Erik Lopez
-Youssef Ateya
+https://kb.samsara.com/hc/en-us/articles/360042986692-Cargo-Monitor-CRGO-Sensors
