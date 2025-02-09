@@ -25,11 +25,8 @@ SECRET_KEY = 'django-insecure-khy7%l910^-g#6^2yodad6dfx!f2%-ydeaxw)_#(+nhoqn)_a8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'whiterock-b8h3ghfhg9fpd7hw.centralus-01.azurewebsites.net',  # Your Azure web app URL
-    '127.0.0.1',  # For local development
-    'localhost',
-]
+ALLOWED_HOSTS = ['*']
+
 
 
 
