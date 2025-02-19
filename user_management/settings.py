@@ -38,7 +38,68 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'django.contrib.sites', # microsoft login start
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.microsoft', # microsoft login end
+    'social_django',
 ]
+
+########################
+# for microsoft login start
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'social_core.backends.azuread.AzureADOAuth2',  # For Microsoft login
+    
+)
+
+SOCIALACCOUNT_PROVIDERS = {
+    'microsoft': {
+        'APP': {
+            'client_id': '9f5f96ca-cef4-46a8-8ab7-cc43b050950f',  # Your Client ID
+            'secret': '5f10fc5f-22bc-449b-b682-f7541cd85f63',  # Your Secret Key
+            'key': '',
+        },
+        'AUTH_PARAMS': {
+            'response_type': 'code',
+            'scope': 'openid email profile',
+            'tenant': '170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259'  # 🔹 Add your Tenant ID here
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+
+LOGIN_REDIRECT_URL = '/accounts/role_redirect/'
+LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+
+
+
+
+
+###### redirect to basicrole after sign up with microsoft:
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',  # This creates a new user
+    'accounts.pipeline.assign_basic_role',  # Custom function to assign role
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
+
+
+# for microsoft login end
+########################
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,6 +109,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'user_management.urls'
@@ -64,6 +127,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Social Auth Context
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },

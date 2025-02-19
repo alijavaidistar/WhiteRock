@@ -6,7 +6,7 @@
     <title>Sign Up</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    
+
     <style>
         body {
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -20,11 +20,12 @@
 
         .signup-container {
             background: #ffffff;
-            padding: 40px;
+            padding: 30px;
             border-radius: 12px;
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
-            width: 550px;
+            width: 480px;
             animation: fadeIn 0.6s ease-in-out;
+            text-align: center;
         }
 
         @keyframes fadeIn {
@@ -33,42 +34,34 @@
         }
 
         .signup-container h2 {
-            text-align: center;
             color: #333;
             font-weight: 600;
             margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            text-align: left;
+            margin-bottom: 15px;
         }
 
         label {
             font-weight: 500;
-            margin-bottom: 8px;
-            display: block;
             color: #333;
         }
 
         .form-control {
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 16px;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 14px;
             width: 100%;
-        }
-
-        .help-text {
-            font-size: 13px;
-            color: #666;
-            margin-top: 5px;
         }
 
         .btn-primary {
             background: #667eea;
             border: none;
-            padding: 14px;
-            font-size: 16px;
-            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 6px;
             width: 100%;
             transition: all 0.3s ease-in-out;
         }
@@ -78,17 +71,43 @@
             transform: translateY(-2px);
         }
 
+        /* Microsoft Button */
+        .microsoft-btn {
+            background-color: #0078D4;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .microsoft-btn:hover {
+            background-color: #005A9E;
+            transform: translateY(-2px);
+        }
+
+        .microsoft-btn img {
+            width: 18px;
+            height: 18px;
+        }
+
         .login-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 15px;
+            margin-top: 15px;
+            font-size: 14px;
         }
 
         .login-link a {
             color: #667eea;
             font-weight: 500;
             text-decoration: none;
-            transition: 0.3s;
         }
 
         .login-link a:hover {
@@ -100,13 +119,25 @@
 
     <div class="signup-container">
         <h2><i class="fas fa-user-plus"></i> Create an Account</h2>
+
+        <!-- Microsoft Sign Up -->
+        <div class="text-center mb-3">
+            <a href="{% url 'social:begin' 'azuread-oauth2' %}" class="microsoft-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
+                Sign Up with Microsoft
+            </a>
+        </div>
+
+        <hr>
+
+        <!-- Standard Sign Up Form -->
         <form method="post">
             {% csrf_token %}
             
             <div class="form-group">
                 {{ form.username.label_tag }}
                 {{ form.username }}
-                <small class="help-text">{{ form.username.help_text }}</small>
+                <small class="text-muted">{{ form.username.help_text }}</small>
             </div>
 
             <div class="form-group">
@@ -122,18 +153,18 @@
             <div class="form-group">
                 {{ form.password1.label_tag }}
                 {{ form.password1 }}
-                <small class="help-text">{{ form.password1.help_text }}</small>
+                <small class="text-muted">{{ form.password1.help_text }}</small>
             </div>
 
             <div class="form-group">
                 {{ form.password2.label_tag }}
                 {{ form.password2 }}
-                <small class="help-text">{{ form.password2.help_text }}</small>
+                <small class="text-muted">{{ form.password2.help_text }}</small>
             </div>
 
             <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
-        
+
         <p class="login-link">
             Already have an account? <a href="/accounts/login/">Login</a>
         </p>

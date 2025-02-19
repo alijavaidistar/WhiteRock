@@ -13,10 +13,11 @@ def home(request):
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
     path('', home, name='home'),  # Root URL
     path('accounts/', include('accounts.urls')),  # Accounts app URLs
     path('basic/', basic_home, name='basic_home'),  # Add basic user route
     path('staff/', staff_home, name='staff_home'),  # Add staff user route
     path('admin/', admin_home, name='admin_home'),  # Add admin user route
 ]
+
