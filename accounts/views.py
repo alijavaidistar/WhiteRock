@@ -9,6 +9,7 @@ from .models import User  # Import custom User model
 from django.contrib import messages
 
 
+'''
 def sign_up(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -20,6 +21,62 @@ def sign_up(request):
             login(request, user, backend=user.backend)
 
             return redirect(f'/{user.role}/')  # Redirect based on role
+    else:
+        form = SignUpForm()
+    
+    return render(request, 'accounts/sign_up.html', {'form': form})
+'''
+
+def sign_up(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.role = "basic"  # Set default role
+            user.save()
+
+            # Explicitly set the backend for authentication
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, user, backend=user.backend)
+
+            return redirect('/basic/')  # ✅ Fix redirect
+    else:
+        form = SignUpForm()
+    
+    return render(request, 'accounts/sign_up.html', {'form': form})
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.role = "basic"  # Force the role to "basic"
+            user.save()
+
+            # Explicitly set the backend for authentication
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, user, backend=user.backend)
+
+            return redirect('/accounts/basic_home/')  # Redirect all new users to basic_home
+        else:
+            print(form.errors)  # Debug: Print validation errors
+
+    else:
+        form = SignUpForm()
+    
+    return render(request, 'accounts/sign_up.html', {'form': form})
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.role = "basic"  # Force the role to "basic"
+            user.save()
+
+            # Explicitly set the backend for authentication
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, user, backend=user.backend)
+
+            return redirect('/accounts/basic_home/')  # Redirect all new users to basic_home
     else:
         form = SignUpForm()
     

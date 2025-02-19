@@ -16,6 +16,7 @@ urlpatterns = [
      path('admin/users/', admin_users_view, name='admin_users'), # accounts url
 
 
+    
     path('admin/users/change_role/<int:user_id>/', change_role, name='change_role'),
     path('admin/users/deactivate/<int:user_id>/', deactivate_user, name='deactivate_user'),  # FIX
     path('admin/users/delete/<int:user_id>/', delete_user, name='delete_user'),
