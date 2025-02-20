@@ -72,6 +72,37 @@
             transform: translateY(-2px);
         }
 
+        .microsoft-login {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .microsoft-btn {
+            background-color: #0078D4;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .microsoft-btn:hover {
+            background-color: #005A9E;
+            transform: translateY(-2px);
+        }
+
+        .microsoft-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
         .links {
             text-align: center;
             margin-top: 20px;
@@ -109,10 +140,18 @@
 
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        
+
+        <!-- Microsoft Login Button -->
+        <div class="microsoft-login">
+            <a href="{% url 'social:begin' 'azuread-oauth2' %}" class="microsoft-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
+                Login with Microsoft
+            </a>
+            
+        </div>
+
         <p class="links">
             Don't have an account? <a href="/accounts/sign-up/">Sign up</a><br>
-            
         </p>
     </div>
 

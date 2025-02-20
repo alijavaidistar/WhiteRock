@@ -9,44 +9,112 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            background: #f8f9fa;
             font-family: 'Poppins', sans-serif;
+            margin: 0;
         }
 
-        .dashboard-container {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
-            width: 700px;
-            animation: fadeIn 0.6s ease-in-out;
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #2c3e50;
+            color: white;
+            position: fixed;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
             text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
         }
 
-        .dashboard-container h2 {
+        .sidebar ul li {
+            padding: 12px;
+            text-align: left;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .sidebar ul li:hover {
+            background: #34495e;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 270px;
+            padding: 30px;
+            width: calc(100% - 270px);
+        }
+
+        .admin-welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-welcome h2 {
+            margin: 0;
+            font-size: 24px;
             color: #333;
-            font-weight: 600;
-            margin-bottom: 10px;
         }
 
-        .dashboard-container p {
-            font-size: 18px;
+        .admin-welcome .staff-badge {
+            background: #f39c12;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        /* Dashboard Stats */
+        .dashboard-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            font-size: 22px;
+            color: #2c3e50;
+        }
+
+        .stat-card p {
+            margin-top: 5px;
+            font-size: 16px;
             color: #555;
-            margin-bottom: 30px;
         }
 
+        /* Logout Button */
         .btn-logout {
-            background: #ff4d4d;
+            background: #e74c3c;
             color: white;
             padding: 12px 20px;
             font-size: 16px;
@@ -54,19 +122,50 @@
             text-decoration: none;
             transition: 0.3s ease-in-out;
             display: inline-block;
+            margin-top: 20px;
         }
 
         .btn-logout:hover {
-            background: #cc0000;
+            background: #c0392b;
             transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <h2><i class="fas fa-user-tie"></i> Welcome, Staff Member!</h2>
-        <p>This is your dashboard.</p>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2><i class="fas fa-user-tie"></i> Staff Panel</h2>
+        <ul>
+            <li><a href="/staff/"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="/accounts/staff/users/"><i class="fas fa-users"></i> Manage Users</a></li>
+            <li><a href="/accounts/logout/"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="admin-welcome">
+            <h2>Welcome, Staff Member!</h2>
+            <span class="staff-badge"><i class="fas fa-cogs"></i> Limited Access</span>
+        </div>
+
+        <!-- Dashboard Stats -->
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <h3>{{ total_users }}</h3>
+                <p>Total Users</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ staff_count }}</h3>
+                <p>Staff Members</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ basic_count }}</h3>
+                <p>Basic Users</p>
+            </div>
+        </div>
+
         <a href="/accounts/logout/" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
