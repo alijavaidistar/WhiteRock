@@ -11,7 +11,9 @@ urlpatterns = [
     path('sign-up/', sign_up, name='sign_up'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
-
+   
+   
+    #path('basic_home', basic_home, name='basic_home'),
     # Include Django AllAuth URLs (needed for Microsoft login)
     path('accounts/', include('allauth.urls')),
 

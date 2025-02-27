@@ -88,19 +88,14 @@ AUTHENTICATION_BACKENDS = (
 )
     #tenant = 170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259
     #client_id = 92088f70-53f7-4321-a0af-85f9463af0c0
-    
+
 
 SOCIALACCOUNT_PROVIDERS = {
-    "microsoft": {
-        "APP": {
-            "client_id": "92088f70-53f7-4321-a0af-85f9463af0c0",
-            "secret": "",
-            "key": "",
-        },
-        "AUTH_PARAMS": {
-            "scope": ["email", "profile"],
-        },
-    }
+    'microsoft': {
+        'tenant': 'organizations',
+        'SCOPE': ['openid', 'profile', 'email', 'User.Read'],
+        'AUTH_PARAMS': {'response_type': 'code'},
+    },
 }
 
 LOGIN_REDIRECT_URL = '/accounts/role_redirect/'

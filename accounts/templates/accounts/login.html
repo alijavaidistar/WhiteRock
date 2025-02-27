@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% load socialaccount %}
+{% load static %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -143,9 +144,10 @@
 
         <!-- Microsoft Login Button -->
         <div class="microsoft-login">
-            <a href="{% url 'social:begin' 'azuread-oauth2' %}" class="microsoft-btn">
+            <a href="{% provider_login_url 'microsoft' %}">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
                 Login with Microsoft
+
             </a>
             
         </div>
