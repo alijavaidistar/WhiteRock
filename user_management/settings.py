@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path 
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +29,33 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "whiterock-b8h3ghfhg9fpd7hw.centralus-01.azurewebsites.net",
     "127.0.0.1",  # Localhost for testing
+    "localhost"
 ]
 
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "debug.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "allauth": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
 
 
 # Application definition
@@ -52,7 +78,7 @@ INSTALLED_APPS = [
 
 ########################
 # for microsoft login start
-SITE_ID = 1
+SITE_ID = 1  # Change this if necessary
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -60,23 +86,22 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.azuread.AzureADOAuth2',  # For Microsoft login
     
 )
+    #tenant = 170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259
+    #client_id = 92088f70-53f7-4321-a0af-85f9463af0c0
+    
 
 SOCIALACCOUNT_PROVIDERS = {
-    'microsoft': {
-        'APP': {
-            'client_id': '9f5f96ca-cef4-46a8-8ab7-cc43b050950f',  # Your Client ID
-            'secret': '5f10fc5f-22bc-449b-b682-f7541cd85f63',  # Your Secret Key
-            'key': '',
+    "microsoft": {
+        "APP": {
+            "client_id": "92088f70-53f7-4321-a0af-85f9463af0c0",
+            "secret": "",
+            "key": "",
         },
-        'AUTH_PARAMS': {
-            'response_type': 'code',
-            'scope': 'openid email profile',
-            'tenant': '170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259'  # 🔹 Add your Tenant ID here
+        "AUTH_PARAMS": {
+            "scope": ["email", "profile"],
         },
-        'OAUTH_PKCE_ENABLED': True,
     }
 }
-
 
 LOGIN_REDIRECT_URL = '/accounts/role_redirect/'
 LOGOUT_REDIRECT_URL = '/'  # Redirect after logout

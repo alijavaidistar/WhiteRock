@@ -3,7 +3,6 @@ Django==5.1.6
 mysqlclient==2.2.7
 sqlparse==0.5.3
 tzdata==2025.1
-
 #Sign up you can choose the role,
 #Every user must go through a basic login
 #Admin can only assign roles.
