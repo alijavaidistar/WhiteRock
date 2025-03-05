@@ -11,7 +11,7 @@ def home(request):
 
 
 urlpatterns = [
-   path('admin/', admin.site.urls),
+  #path('admin/', admin.site.urls),
     path('', home, name='home'),  # Root URL
    path('accounts/', include('accounts.urls')),  # Accounts app URLs
 
