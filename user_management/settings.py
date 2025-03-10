@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "whiterock-b8h3ghfhg9fpd7hw.centralus-01.azurewebsites.net",
     "127.0.0.1",  # Localhost for testing
+    'localhost',
 ]
 
 
@@ -48,11 +50,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.microsoft', # microsoft login end
     'social_django',
+    'approval_system',
 ]
 
 ########################
 # for microsoft login start
-SITE_ID = 1
+SITE_ID = 2
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -61,6 +64,7 @@ AUTHENTICATION_BACKENDS = (
     
 )
 
+''' old -- micro login
 SOCIALACCOUNT_PROVIDERS = {
     'microsoft': {
         'APP': {
@@ -76,6 +80,22 @@ SOCIALACCOUNT_PROVIDERS = {
         'OAUTH_PKCE_ENABLED': True,
     }
 }
+
+'''
+
+######## new -- micro login start
+SOCIALACCOUNT_PROVIDERS = {
+    'microsoft': {
+        'tenant': 'organizations',
+        'SCOPE': ['openid', 'profile', 'email', 'User.Read'],
+        'AUTH_PARAMS': {'response_type': 'code'},
+    },
+}
+
+
+######## new -- micro login end
+
+
 
 
 LOGIN_REDIRECT_URL = '/accounts/role_redirect/'

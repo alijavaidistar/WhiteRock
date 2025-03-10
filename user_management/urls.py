@@ -19,6 +19,9 @@ urlpatterns = [
     path('basic/', basic_home, name='basic_home'),  # Add basic user route
     path('staff/', staff_home, name='staff_home'),  # Add staff user route
     path('admin/', admin_home, name='admin_home'),  # Add admin user route
+
+        # NEW: Include Approval System URLs
+    path('approval/', include('approval_system.urls')), 
 ]
 
 
