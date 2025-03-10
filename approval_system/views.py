@@ -19,12 +19,17 @@ def submit_request(request):
             new_request = form.save(commit=False)
             new_request.user = request.user
             new_request.status = 'pending'
+
+            # Convert form fields to JSON for storage
+            new_request.data = form.cleaned_data['data']
+
             new_request.save()
-            return redirect('request_list')  # Redirect to request tracking page
+            return redirect('request_list')
     else:
         form = RequestForm(initial={'form_name': form_name}, user=request.user)
 
     return render(request, 'approval_system/submit_request.html', {'form': form, 'form_name': form_name})
+
 
 
 

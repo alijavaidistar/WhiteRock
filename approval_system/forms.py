@@ -1,10 +1,11 @@
 from django import forms
+import json
 from .models import Request
 
 class RequestForm(forms.ModelForm):
     class Meta:
         model = Request
-        fields = ['form_name', 'data', 'signature']
+        fields = ['form_name', 'signature']  # ✅ Remove 'data' from fields (we'll handle it separately)
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # Get logged-in user
@@ -30,9 +31,21 @@ class RequestForm(forms.ModelForm):
                 label="Withdrawal Term"
             )
 
-        elif form_name == "Veteran Benefits":
-            self.fields['data'] = forms.CharField(
-                widget=forms.Textarea(attrs={'placeholder': 'Provide details about your VA benefits request'}),
-                label="VA Benefit Details",
-                required=True
-            )
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # Automatically convert form inputs into a JSON field
+        self.cleaned_data['data'] = json.dumps({
+            'student_name': cleaned_data.get('student_name'),
+            'myuh_id': cleaned_data.get('myuh_id'),
+            'last_name': cleaned_data.get('last_name'),
+            'first_name': cleaned_data.get('first_name'),
+            'middle_name': cleaned_data.get('middle_name'),
+            'phone': cleaned_data.get('phone'),
+            'email': cleaned_data.get('email'),
+            'program_plan': cleaned_data.get('program_plan'),
+            'academic_career': cleaned_data.get('academic_career'),
+            'withdrawal_term': cleaned_data.get('withdrawal_term'),
+        })
+
+        return cleaned_data
