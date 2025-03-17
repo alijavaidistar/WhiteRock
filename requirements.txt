@@ -13,3 +13,4 @@ Get commands to create an admin account
 manually create a query to create an admin account
 Create buttons depending what the user role is.
 
+C:\Users\ali\AppData\Local\Programs\Python\Python313\python.exe manage.py runserver
