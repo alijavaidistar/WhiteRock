@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Request</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'approval_system/styles.css' %}">
+    <style>
+        /* Container styling */
+        .review-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Request details section */
+        .request-details {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .request-details p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Status badge */
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .badge-pending { background: #ffc107; color: #333; }
+        .badge-approved { background: #28a745; color: white; }
+        .badge-returned { background: #dc3545; color: white; }
+
+        /* Admin actions section */
+        .admin-actions {
+            text-align: center;
+        }
+
+        .admin-actions textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-return {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="review-container">
+    <h2>Review Request: {{ req.form_name }}</h2>
+
+    <div class="request-details">
+        <h3>Student Information</h3>
+        <p><strong>Student:</strong> {{ req.user.get_full_name }}</p>
+        <p><strong>Submitted On:</strong> {{ req.submitted_at }}</p>
+        <p><strong>Status:</strong> 
+            <span class="badge 
+                {% if req.status == 'pending' %}badge-pending
+                {% elif req.status == 'approved' %}badge-approved
+                {% elif req.status == 'returned' %}badge-returned{% endif %}">
+                {{ req.status|capfirst }}
+            </span>
+        </p>
+
+        <h3>Form Details</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            {% for key, value in form_data.items %}
+                <tr>
+                    <td>{{ key|capfirst }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="admin-actions">
+        <h3>Admin Actions</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label for="comments"><strong>Comments (optional):</strong></label>
+            <textarea name="comments" rows="4" placeholder="Enter comments if returning request"></textarea>
+            
+            <br>
+            <button type="submit" name="action" value="approve" class="btn btn-approve">Approve</button>
+            <button type="submit" name="action" value="return" class="btn btn-return">Return with Comments</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

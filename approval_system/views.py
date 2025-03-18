@@ -6,12 +6,17 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import FileResponse
 import os
 from django.conf import settings
+import json
 
 from .utils import generate_request_pdf
 
 @login_required
 def submit_request(request):
     form_name = request.GET.get('form_name', '')
+
+    if form_name == "Veteran Benefits":
+        form_name = "Veteran Educational Benefits"
+
 
     if request.method == 'POST':
         form = RequestForm(request.POST, request.FILES, user=request.user)
@@ -21,7 +26,10 @@ def submit_request(request):
             new_request.status = 'pending'
 
             # Convert form fields to JSON for storage
-            new_request.data = form.cleaned_data['data']
+            new_request.data = form.cleaned_data.get('data', '{}')  # ✅ Default to empty JSON object
+            print("Storing Data:", new_request.data)  # ✅ Debug before saving
+
+
 
             new_request.save()
             return redirect('request_list')
@@ -53,37 +61,13 @@ def admin_requests(request):
     requests = Request.objects.all()  # Fetch all requests
     return render(request, 'approval_system/admin_requests.html', {'requests': requests})
 
-@login_required
-@user_passes_test(is_admin)
-def approve_request(request, request_id):
+
     req = Request.objects.get(id=request_id)
     req.status = 'approved'
     req.save()
     return redirect('admin_requests')
 
-@login_required
-@user_passes_test(is_admin)
-def return_request(request, request_id):
-    req = Request.objects.get(id=request_id)
-    req.status = 'returned'
-    req.save()
-    return redirect('admin_requests')
 
-
-
-
-@login_required
-@user_passes_test(is_admin)
-def approve_request(request, request_id):
-    req = Request.objects.get(id=request_id)
-    req.status = 'approved'
-
-    # Generate PDF and save the filename
-    pdf_filename = generate_request_pdf(request_id)
-    req.pdf_file = f"request_pdfs/{pdf_filename}"
-    req.save()
-
-    return redirect('admin_requests')
 
 @login_required
 def download_pdf(request, request_id):
@@ -97,3 +81,34 @@ def download_pdf(request, request_id):
     return FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
 
 
+@login_required
+@user_passes_test(is_admin)
+def review_request(request, request_id):
+    req = Request.objects.get(id=request_id)
+
+    # ✅ Debugging: Print `req.data` before processing
+    print("Raw Request Data:", req.data)  
+
+    try:
+        form_data = json.loads(req.data) if req.data else {}
+    except json.JSONDecodeError:
+        form_data = {}  # Default to empty dictionary if parsing fails
+
+    print("Parsed Form Data:", form_data)  # ✅ Debug parsed data
+
+    if request.method == "POST":
+        action = request.POST.get("action")
+
+        if action == "approve":
+            req.status = "approved"
+            req.save()
+            return redirect("admin_requests")
+
+        elif action == "return":
+            comments = request.POST.get("comments", "")
+            req.comments = comments
+            req.status = "returned"
+            req.save()
+            return redirect("admin_requests")
+
+    return render(request, "approval_system/review_request.html", {"req": req, "form_data": form_data})

@@ -159,8 +159,8 @@
             <td>{{ req.submitted_at }}</td>
             <td>
                 {% if req.status == "pending" %}
-                    <a href="{% url 'approve_request' req.id %}" class="btn btn-success"><i class="fas fa-check"></i> Approve</a>
-                    <a href="{% url 'return_request' req.id %}" class="btn btn-danger"><i class="fas fa-times"></i> Return</a>
+                <a href="{% url 'review_request' req.id %}" class="btn btn-primary">Review</a>
+
                 {% else %}
                     <span class="badge badge-{{ req.status }}">{{ req.status }}</span>
                 {% endif %}

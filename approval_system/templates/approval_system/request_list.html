@@ -137,6 +137,7 @@
                     <span class="badge badge-approved">Approved</span>
                 {% elif req.status == "returned" %}
                     <span class="badge badge-returned">Returned</span>
+                    <p><strong>Admin Comments:</strong> {{ req.comments }}</p>
                 {% else %}
                     <span class="badge badge-pending">Pending</span>
                 {% endif %}
@@ -144,7 +145,9 @@
             <td>{{ req.submitted_at }}</td>
             <td>
                 {% if req.status == "approved" %}
-                    <a href="{% url 'download_pdf' req.id %}" class="btn-download"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                    <a href="{% url 'download_pdf' req.id %}" class="btn-download">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </a>
                 {% else %}
                     <span class="badge badge-{{ req.status }}">{{ req.status }}</span>
                 {% endif %}
@@ -154,6 +157,9 @@
         <tr><td colspan="4">No requests submitted yet.</td></tr>
         {% endfor %}
     </table>
+    
+    <a href="{% url 'basic_home' %}" class="btn">Back to Home</a>
+
 
 </div>
 
