@@ -7,6 +7,22 @@
     <title>Review Request</title>
     <link rel="stylesheet" type="text/css" href="{% static 'approval_system/styles.css' %}">
     <style>
+
+        .btn-download {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn-download:hover {
+            background-color: #0056b3;
+        }
+
         /* Container styling */
         .review-container {
             max-width: 800px;
@@ -137,6 +153,15 @@
                 </tr>
             {% endfor %}
         </table>
+
+            <!-- ✅ Add Signed PDF Download Section -->
+        {% if req.pdf_file %}
+            <h3>Generated PDF</h3>
+            <p><a href="{{ req.pdf_file.url }}" target="_blank" class="btn btn-download">Download Signed PDF</a></p>
+        {% endif %}
+
+
+
     </div>
 
     <div class="admin-actions">

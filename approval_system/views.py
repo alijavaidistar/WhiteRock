@@ -101,6 +101,9 @@ def review_request(request, request_id):
 
         if action == "approve":
             req.status = "approved"
+          # ✅ Generate signed PDF
+            pdf_filename = generate_request_pdf(req.id)  # ← No admin_signature argument
+            req.pdf_file = f"request_pdfs/{pdf_filename}"  # Store relative path
             req.save()
             return redirect("admin_requests")
 

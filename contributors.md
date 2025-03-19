@@ -1,1 +1,4 @@
-https://kb.samsara.com/hc/en-us/articles/360042986692-Cargo-Monitor-CRGO-Sensors
+ALI JAVAID
+NAIM MOMIN
+ERIK LOPEZ
+YOUSSEF ATEYA
