@@ -197,11 +197,20 @@ class RequestForm(forms.ModelForm):
 
         print(f"🛠 Final Fields: {self.fields.keys()}")  # ✅ Debugging output
 
-    def clean(self):
-        cleaned_data = super().clean()
-        form_name = self.initial.get('form_name', '')
+def clean(self):
+    from django.core.files.uploadedfile import InMemoryUploadedFile
+    cleaned_data = super().clean()
+    form_name = self.initial.get('form_name', '')
 
-        print("Cleaned Data Before JSON:", cleaned_data)  # ✅ Debugging
+    # ✅ Exclude file uploads from JSON serialization
+    json_ready_data = {}
+    for key, value in cleaned_data.items():
+        if not isinstance(value, InMemoryUploadedFile):  # ✅ Ignore file uploads
+            json_ready_data[key] = value
 
-        cleaned_data['data'] = json.dumps(cleaned_data)  # Convert to JSON
-        return cleaned_data
+    print("DEBUG: Cleaned Data Before JSON:", json_ready_data)  # ✅ Debugging
+
+    # ✅ Convert cleaned data to JSON and store it
+    cleaned_data['data'] = json.dumps(json_ready_data)
+
+    return cleaned_data

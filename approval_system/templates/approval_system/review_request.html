@@ -166,11 +166,18 @@
 
     <div class="admin-actions">
         <h3>Admin Actions</h3>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">  <!-- ✅ Add enctype for file upload -->
             {% csrf_token %}
+    
+            <!-- ✅ Admin Signature Upload -->
+            <label for="signature"><strong>Upload Signature (PNG only):</strong></label>
+            <input type="file" name="signature" accept="image/png" required>
+    
+            <br><br>
+    
             <label for="comments"><strong>Comments (optional):</strong></label>
             <textarea name="comments" rows="4" placeholder="Enter comments if returning request"></textarea>
-            
+    
             <br>
             <button type="submit" name="action" value="approve" class="btn btn-approve">Approve</button>
             <button type="submit" name="action" value="return" class="btn btn-return">Return with Comments</button>

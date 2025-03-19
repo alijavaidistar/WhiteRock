@@ -7,6 +7,7 @@ from django.http import FileResponse
 import os
 from django.conf import settings
 import json
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from .utils import generate_request_pdf
 
@@ -17,27 +18,36 @@ def submit_request(request):
     if form_name == "Veteran Benefits":
         form_name = "Veteran Educational Benefits"
 
-
     if request.method == 'POST':
         form = RequestForm(request.POST, request.FILES, user=request.user)
+
         if form.is_valid():
             new_request = form.save(commit=False)
             new_request.user = request.user
             new_request.status = 'pending'
 
-            # Convert form fields to JSON for storage
-            new_request.data = form.cleaned_data.get('data', '{}')  # ✅ Default to empty JSON object
+            # ✅ Exclude file uploads from JSON storage
+            json_ready_data = {}
+            for key, value in form.cleaned_data.items():
+                if not isinstance(value, InMemoryUploadedFile):  # ✅ Ignore file uploads
+                    json_ready_data[key] = value
+
+            # ✅ Store only JSON-serializable data
+            new_request.data = json.dumps(json_ready_data)
+
             print("Storing Data:", new_request.data)  # ✅ Debug before saving
 
-
+            # ✅ Handle file uploads separately
+            if 'signature' in request.FILES:
+                new_request.signature = request.FILES['signature']  # ✅ Store file in DB
 
             new_request.save()
             return redirect('request_list')
+
     else:
         form = RequestForm(initial={'form_name': form_name}, user=request.user)
 
     return render(request, 'approval_system/submit_request.html', {'form': form, 'form_name': form_name})
-
 
 
 
@@ -73,12 +83,19 @@ def admin_requests(request):
 def download_pdf(request, request_id):
     req = Request.objects.get(id=request_id)
 
-    # Ensure only approved requests can be downloaded
-    if req.status != 'approved' or not req.pdf_file:
+    # Ensure the PDF file exists
+    if not req.pdf_file:
         return redirect('request_list')
 
-    pdf_path = os.path.join(settings.MEDIA_ROOT, req.pdf_file)
+    # ✅ Convert FieldFile to string path
+    pdf_path = os.path.join(settings.MEDIA_ROOT, str(req.pdf_file))  # ✅ Convert to string
+
+    # ✅ Check if file exists before returning
+    if not os.path.exists(pdf_path):
+        return redirect('request_list')
+
     return FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
+
 
 
 @login_required
@@ -86,25 +103,28 @@ def download_pdf(request, request_id):
 def review_request(request, request_id):
     req = Request.objects.get(id=request_id)
 
-    # ✅ Debugging: Print `req.data` before processing
-    print("Raw Request Data:", req.data)  
-
-    try:
-        form_data = json.loads(req.data) if req.data else {}
-    except json.JSONDecodeError:
-        form_data = {}  # Default to empty dictionary if parsing fails
-
-    print("Parsed Form Data:", form_data)  # ✅ Debug parsed data
+    # Convert JSON `data` into a Python dictionary
+    form_data = json.loads(req.data) if req.data else {}
 
     if request.method == "POST":
         action = request.POST.get("action")
 
         if action == "approve":
+            # ✅ First, update the request status and save it
             req.status = "approved"
-          # ✅ Generate signed PDF
-            pdf_filename = generate_request_pdf(req.id)  # ← No admin_signature argument
+            req.save()  # ✅ Save to ensure the correct status before PDF generation
+
+            # ✅ Get admin's full name or username
+            approved_by = request.user.get_full_name().strip() or request.user.username
+
+            # ✅ Debugging: Print the admin's name
+            print(f"DEBUG: Approved By = {approved_by}")
+
+            # ✅ Generate the PDF with admin's name
+            pdf_filename = generate_request_pdf(req.id, approved_by)
             req.pdf_file = f"request_pdfs/{pdf_filename}"  # Store relative path
-            req.save()
+            req.save()  # ✅ Save again after updating the PDF file
+
             return redirect("admin_requests")
 
         elif action == "return":
@@ -115,3 +135,6 @@ def review_request(request, request_id):
             return redirect("admin_requests")
 
     return render(request, "approval_system/review_request.html", {"req": req, "form_data": form_data})
+
+
+
