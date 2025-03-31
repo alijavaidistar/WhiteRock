@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Request</title>
+    <style>
+        /* Full-page background */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #007BFF, #00A6FF);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Form container */
+        .form-container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Form title */
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Labels */
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+            color: #555;
+        }
+
+        /* Input Fields */
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="number"],
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background: #f8f8f8;
+            transition: border 0.3s ease-in-out;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border: 1px solid #007BFF;
+            outline: none;
+        }
+
+        /* Submit Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.02);
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            form input[type="text"],
+            form input[type="email"],
+            form input[type="number"],
+            form textarea,
+            form select {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 16px;
+            }
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Submit Request: {{ form_name }}</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+
+</body>
+</html>
