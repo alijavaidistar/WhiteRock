@@ -1,9 +1,9 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=user_management.settings
 
 # Set work directory
@@ -30,8 +30,9 @@ COPY . /app/
 RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
+# Run migrations and collect static files
+RUN python manage.py migrate && \
+    python manage.py collectstatic --noinput
 
 # Expose port
 EXPOSE 8000
