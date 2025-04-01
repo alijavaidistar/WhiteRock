@@ -16,12 +16,14 @@ import logging
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yher2$uis(8t(3+7=xf2(4=h#@5vke!v%csl2je=#sbq2bboai'
+
+#tailwind configuration
+TAILWIND_APP_THEME = 'theme'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -51,6 +53,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft', # microsoft login end
     'social_django',
     'approval_system',
+    'tailwind',
+    'theme'
 ]
 
 ########################
