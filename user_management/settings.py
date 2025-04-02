@@ -22,8 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yher2$uis(8t(3+7=xf2(4=h#@5vke!v%csl2je=#sbq2bboai'
 
-#tailwind configuration
-TAILWIND_APP_THEME = 'theme'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,6 +54,9 @@ INSTALLED_APPS = [
     'tailwind',
     'theme'
 ]
+
+#tailwind configuration
+TAILWIND_APP_NAME = 'theme'
 
 ########################
 # for microsoft login start
@@ -211,8 +212,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Assuming your 'static' folder is at the root level of the project
+    BASE_DIR / "accounts/static"# Add other directories where you keep static files
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
