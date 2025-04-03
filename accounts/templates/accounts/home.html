@@ -20,14 +20,14 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            padding: 15px 40px;
+            padding: 2vh 4vw;
             background-color: #f8f9fa;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-left: auto;
         }
         .btn-header {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 1vh 2vw; /* 1% of viewport height, 2% of viewport width */
+            font-size: 1rem; /* Relative to root font size */
             border: none;
             border-radius: 5px;
             text-decoration: none;
@@ -53,8 +53,8 @@
             gap: 10px;
         }
         .random-box {
-            width: 920px;
-            height: 780px;
+            width: 45vw; /* 80% of viewport width */
+            height: 70vh; /* 80% of viewport height */
             background-color: #ffcc00;
             background-position: center;
             position: absolute;
@@ -64,11 +64,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
             font-weight: bold;
             color: #333;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
+            font-size: 1.2rem; /* Scales with font settings */
             z-index: 1;
         }
 
@@ -86,7 +86,7 @@
             top: 10%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 30px;
+            font-size: 2.25rem;
             font-weight: bold;
             color: Black;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
@@ -94,13 +94,12 @@
         }
 
         .benefitsButton {
-            width: 400px; /* Adjust width for content */
-            height: 500px; /* Allow it to adjust based on content */
+            width: 100%; /* Adjust width for content */
+            height: auto; /* Allow it to adjust based on content */
             display: flex;
             justify-content: flex-end; /* Space between benefits and button */
             align-items: center;
-            width: 100%; /* Full width of .random-box */
-            padding: 10px 20px;
+            padding: 2vw;
             border-radius: 8px; /* Rounded corners */
             z-index: 4;
 
@@ -117,8 +116,8 @@
             border-radius: 8px;
             color: white;
             font-size: 18px;
-            width: 400px; /* Adjust width for content */
-            height: 50%; /* Allow it to adjust based on content */
+            width: 25vw; /* Adjust width for content */
+            height: auto; /* Allow it to adjust based on content */
             display: flex;
             flex-direction: column; /* Stack items vertically */
             justify-content: space-between;
@@ -152,8 +151,8 @@
         }
 
         .random-box-2 {
-            width: 920px;
-            height: 780px;
+            width: 45vw; 
+            height: 70vh; 
             background-color: #ffcc00;
             position: absolute;
             top: 54%;
