@@ -216,7 +216,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Assuming your 'static' folder is at the root level of the project
-    BASE_DIR / "accounts/static"# Add other directories where you keep static files
+    BASE_DIR / "accounts/static",# Add other directories where you keep static files
+    BASE_DIR / "approval_system/static"
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
