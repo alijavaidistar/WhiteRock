@@ -1,23 +1,8 @@
-asgiref==3.8.1
-Django==5.1.6
+ asgiref>=3.7.0
+Django>=4.2.0,<5.0.0
 mysqlclient==2.2.7
 sqlparse==0.5.3
 tzdata==2025.1
-#Sign up you can choose the role,
-#Every user must go through a basic login
-#Admin can only assign roles.
-
-
-#Get commands to create an admin account 
-#manually create a query to create an admin account
-#Create buttons depending what the user role is.
-
-User gets to submit a request 
-and depending on the request it will be in one of three containers
--> Drafted - "Draft" when it is not submitted
--> Returned - "Returned" when it has been sent back to the user for additional request
--> Approved - "Approved" When the request has been approved by the admin
--> Pending - "pending" if ther are more then one admin, and not all of these approved it.
-
-
-C:\Users\ali\AppData\Local\Programs\Python\Python313\python.exe manage.py runserver
+django-allauth==0.61.1
+social-auth-app-django==5.4.0
+reportlab==4.1.0 
