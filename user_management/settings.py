@@ -25,7 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yher2$uis(8t(3+7=xf2(4=h#@5vke!v%csl2je=#sbq2bboai'
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -35,6 +34,30 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "debug.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "allauth": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
 
 
 # Application definition
@@ -63,7 +86,7 @@ TAILWIND_APP_NAME = 'theme'
 
 ########################
 # for microsoft login start
-SITE_ID = 2
+SITE_ID = 1  # Change this if necessary
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -71,25 +94,9 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.azuread.AzureADOAuth2',  # For Microsoft login
     
 )
+    #tenant = 170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259
+    #client_id = 92088f70-53f7-4321-a0af-85f9463af0c0
 
-''' old -- micro login
-SOCIALACCOUNT_PROVIDERS = {
-    'microsoft': {
-        'APP': {
-            'client_id': '9f5f96ca-cef4-46a8-8ab7-cc43b050950f',  # Your Client ID
-            'secret': '5f10fc5f-22bc-449b-b682-f7541cd85f63',  # Your Secret Key
-            'key': '',
-        },
-        'AUTH_PARAMS': {
-            'response_type': 'code',
-            'scope': 'openid email profile',
-            'tenant': '170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259'  # 🔹 Add your Tenant ID here
-        },
-        'OAUTH_PKCE_ENABLED': True,
-    }
-}
-
-'''
 
 ######## new -- micro login start
 SOCIALACCOUNT_PROVIDERS = {
@@ -105,8 +112,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 
-
-LOGIN_REDIRECT_URL = '/accounts/role_redirect/'
+LOGIN_REDIRECT_URL = '/basic/'
 LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 
 

@@ -13,9 +13,9 @@ def home(request):
 
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+  #path('admin/', admin.site.urls),
     path('', home, name='home'),  # Root URL
-    path('accounts/', include('accounts.urls')),  # Accounts app URLs
+   path('accounts/', include('accounts.urls')),  # Accounts app URLs
 
     # if you look in view.py you will see these functions being defined there
     path('basic/', basic_home, name='basic_home'),  # Add basic user route

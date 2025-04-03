@@ -9,7 +9,7 @@ from .models import User  # Import custom User model
 from django.contrib import messages
 
 
-'''
+'''''
 def sign_up(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -25,8 +25,7 @@ def sign_up(request):
         form = SignUpForm()
     
     return render(request, 'accounts/sign_up.html', {'form': form})
-'''
-
+'''''
 def sign_up(request):
     # Check if the request method is POST, indicating the form has been submitted
     if request.method == "POST":
@@ -60,7 +59,6 @@ def sign_up(request):
     # 'request': The HTTP request object (provides details about the incoming request)
     # 'accounts/sign_up.html': The template to be rendered
     # {'form': form}: The context data to be passed to the template (in this case, the form object)
-
 
 # This function handles the user login process
 def login_view(request):
