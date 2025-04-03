@@ -1,0 +1,19 @@
+The theme folder is to organize the styles and configuration related to the visual appearance of your app, especially when
+integrating a CSS framework.
+
+The theme folder typically contains the TailWind CSS configuration
+
+The theme folder is also where you would want to keep all your static files as well,
+there is a folder called static src, and within that we have src.
+
+Integration with django tailwind, The app will automatically recognize tailwind inside your app.
+
+
+ {% static %} ==> The purpose of this is to refer to static files, and partial of the path is coded within settings.py under
+ STATIC_URL
+
+ Create a filter system for admin that will be able to filter our different types of request.
+
+ 
+
+ 

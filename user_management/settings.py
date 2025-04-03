@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path 
+from pathlib import Path
 import logging
 import os
+import mimetypes
+
+mimetypes.add_type("application/javascript", ".js", True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,13 +28,11 @@ STATICFILES_DIRS = [
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 #BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yher2$uis(8t(3+7=xf2(4=h#@5vke!v%csl2je=#sbq2bboai'
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,7 +40,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "whiterock-b8h3ghfhg9fpd7hw.centralus-01.azurewebsites.net",
     "127.0.0.1",  # Localhost for testing
-    "localhost"
+    'localhost',
 ]
 
 
@@ -85,11 +86,16 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft', # microsoft login end
     'social_django',
     'approval_system',
+    'tailwind',
+    'theme'
 ]
+
+#tailwind configuration
+TAILWIND_APP_NAME = 'theme'
 
 ########################
 # for microsoft login start
-SITE_ID = 2 # Change this if necessary
+SITE_ID = 1  # Change this if necessary
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -100,6 +106,8 @@ AUTHENTICATION_BACKENDS = (
     #tenant = 170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259
     #client_id = 92088f70-53f7-4321-a0af-85f9463af0c0
 
+
+######## new -- micro login start
 SOCIALACCOUNT_PROVIDERS = {
     'microsoft': {
         'tenant': 'organizations',
@@ -107,6 +115,11 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'response_type': 'code'},
     },
 }
+
+
+######## new -- micro login end
+
+
 
 LOGIN_REDIRECT_URL = '/basic/'
 LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
@@ -217,7 +230,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Assuming your 'static' folder is at the root level of the project
+    BASE_DIR / "accounts/static",# Add other directories where you keep static files
+    BASE_DIR / "approval_system/static"
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
