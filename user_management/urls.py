@@ -8,8 +8,6 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'accounts/home.html')  # Use 'accounts/home.html' since it's inside accounts/templates/accounts
 
-
-
 urlpatterns = [
   #path('admin/', admin.site.urls),
     path('', home, name='home'),  # Root URL

@@ -3,6 +3,8 @@ Django==5.1.6
 mysqlclient==2.2.7
 sqlparse==0.5.3
 tzdata==2025.1
+django-allauth==65.6.0
+
 #Sign up you can choose the role,
 #Every user must go through a basic login
 #Admin can only assign roles.
@@ -12,12 +14,11 @@ tzdata==2025.1
 #manually create a query to create an admin account
 #Create buttons depending what the user role is.
 
-User gets to submit a request 
-and depending on the request it will be in one of three containers
--> Drafted - "Draft" when it is not submitted
--> Returned - "Returned" when it has been sent back to the user for additional request
--> Approved - "Approved" When the request has been approved by the admin
--> Pending - "pending" if ther are more then one admin, and not all of these approved it.
+#User gets to submit a request 
+#and depending on the request it will be in one of three containers
+#-> Drafted - "Draft" when it is not submitted
+#-> Returned - "Returned" when it has been sent back to the user for additional request
+#-> Approved - "Approved" When the request has been approved by the admin
+#-> Pending - "pending" if ther are more then one admin, and not all of these approved it.
 
-
-C:\Users\ali\AppData\Local\Programs\Python\Python313\python.exe manage.py runserver
+#C:\Users\ali\AppData\Local\Programs\Python\Python313\python.exe manage.py runserver

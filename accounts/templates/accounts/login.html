@@ -11,17 +11,18 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #dba6a6, #be3641);
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             height: 100vh;
             margin: 0;
             font-family: 'Poppins', sans-serif;
+            padding: 0 10%;
         }
 
         .login-container {
-            background: #ffffff;
+            background: #FFFFFF;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
@@ -121,10 +122,37 @@
         .links a:hover {
             text-decoration: underline;
         }
+
+        .logo-container {
+    position: absolute;
+    top: 20px;
+    left: 120px;
+}
+
+.logo-container img {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+}
+
+.login-right {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    transform: translateY(-50%); /* Center the image vertically */
+    width: 550px; /* Match the size of the login container */
+    height: auto;
+    border-radius: 12px; /* Same rounded corners as login container */
+}
+
     </style>
 </head>
 <body>
 
+    <div class="logo-container">
+        <img src="{% static 'images/uhlogo.png' %}" alt="UH Logo">
+    </div>
+
+    <!-- Login Box on the Right -->
     <div class="login-container">
         <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
         <form method="post">
@@ -143,18 +171,20 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
-         <!-- Microsoft Sign Up -->
-<div class="text-center mb-3">
-    <a href="{% provider_login_url 'microsoft' %}" class="microsoft-btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
-        Log in with Microsoft
-    </a>
-</div>
+        <!-- Microsoft Sign Up -->
+        <div class="text-center mb-3">
+           <a href="{% provider_login_url 'microsoft' %}" class="microsoft-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
+                Log in with Microsoft
+            </a>
+        </div>
 
         <p class="links">
             Don't have an account? <a href="/accounts/sign-up/">Sign up</a><br>
         </p>
     </div>
+
+    <img src="{% static 'images/loginright.png' %}" alt="Login Right Image" class="login-right">
 
 </body>
 </html>

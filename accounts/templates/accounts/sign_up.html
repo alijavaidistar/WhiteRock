@@ -11,23 +11,26 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #dba6a6, #be3641); /* Same as login background */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             font-family: 'Poppins', sans-serif;
+            position: relative;
         }
 
+        /* Signup container matching the background gradient */
         .signup-container {
-            background: #ffffff;
+            background: #FFFFFF;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
             width: 480px;
             animation: fadeIn 0.6s ease-in-out;
             text-align: center;
+            z-index: 1;
         }
 
         @keyframes fadeIn {
@@ -115,20 +118,36 @@
         .login-link a:hover {
             text-decoration: underline;
         }
+
+        /* Position the logo in the same spot as the login */
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 120px;
+        }
+
+        .logo-container img {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+        }
     </style>
 </head>
 <body>
+
+    <div class="logo-container">
+        <img src="{% static 'images/uhlogo.png' %}" alt="UH Logo">
+    </div>
 
     <div class="signup-container">
         <h2><i class="fas fa-user-plus"></i> Create an Account</h2>
 
         <!-- Microsoft Sign Up -->
-<div class="text-center mb-3">
-    <a href="{% provider_login_url 'microsoft' %}" class="microsoft-btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
-        Sign Up with Microsoft
-    </a>
-</div>
+        <div class="text-center mb-3">
+            <a href="{% provider_login_url 'microsoft' %}" class="microsoft-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
+                Sign Up with Microsoft
+            </a>
+        </div>
 
         <!-- Standard Sign Up Form -->
         <form method="post">
@@ -140,20 +159,10 @@
                 <small class="text-muted">{{ form.username.help_text }}</small>
             </div>
 
-
-            
             <div class="form-group">
                 {{ form.email.label_tag }}
                 {{ form.email }}
             </div>
-             
-
-            <!--
-            <div class="form-group">
-                {{ form.role.label_tag }}
-                {{ form.role }}
-            </div>
-            -->
 
             <div class="form-group">
                 {{ form.password1.label_tag }}

@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -7,8 +6,8 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User  # Import custom User model
 from django.contrib import messages
-
-
+from django.shortcuts import redirect
+from allauth.socialaccount.providers.microsoft.views import MicrosoftGraphOAuth2Adapter
 '''''
 def sign_up(request):
     if request.method == "POST":
@@ -26,6 +25,8 @@ def sign_up(request):
     
     return render(request, 'accounts/sign_up.html', {'form': form})
 '''''
+
+
 def sign_up(request):
     # Check if the request method is POST, indicating the form has been submitted
     if request.method == "POST":
