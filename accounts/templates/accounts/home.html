@@ -18,11 +18,12 @@
         }
         .header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             padding: 15px 40px;
             background-color: #f8f9fa;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-left: auto;
         }
         .btn-header {
             padding: 10px 20px;
@@ -109,7 +110,7 @@
         .benefits {
             position: absolute;
             top: 50%;
-            left: 9%;
+            left: 27%;
             transform: translateY(-50%);
             background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
             padding: 20px;
@@ -150,7 +151,6 @@
             line-height: 1.0;
         }
 
-
         .random-box-2 {
             width: 920px;
             height: 780px;
@@ -190,7 +190,7 @@
 <body>
 
     <header class="header">
-        <a href="#" class="btn-header btn-how">How it Works</a>
+        <!--<a href="#" class="btn-header btn-how">How it Works</a> -->
         <div class="right-buttons">
             <a href="/accounts/sign-up/" class="btn-header btn-signup">Sign Up</a>
             <a href="/accounts/login/" class="btn-header btn-login">Login</a>
@@ -210,7 +210,6 @@
                     <li>Transfer students must submit VA form 22-1995 or 22-5495 to change institutions.</li>
                 </ul>
             </div>
-            <button class="get-started-btn">Get Started Now</button>
         </div>
     </div>
     
@@ -228,7 +227,6 @@
                     <li>Special exceptions apply for military, medical, or personal emergency withdrawals.</li>
                 </ul>
             </div>
-            <button class="get-started-btn">Get Started Now</button>
         </div>
     </div>
     

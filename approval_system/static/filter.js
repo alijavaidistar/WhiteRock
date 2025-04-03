@@ -1,4 +1,7 @@
+
+
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("Here")
     const statusFilter = document.getElementById("statusFilter");
     const actionFilter = document.getElementById("actionFilter");
     const rows = document.querySelectorAll(".request-row");
