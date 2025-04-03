@@ -1,7 +1,8 @@
 from django.urls import path, include
 from .views import sign_up, login_view, logout_view,role_based_redirect, admin_users_view, change_role, delete_user, deactivate_user
-from django.urls import path
-from django.urls import path
+
+
+
 # Each entry follows this pattern path('URL_PATTERN/', VIEW_FUNCTION, name='URL_NAME')
 # 'URL_PATTERN/' defines the URL endpoint.
 # VIEW_FUNCTION is the Python function that handles the request.

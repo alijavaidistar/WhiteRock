@@ -6,8 +6,8 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User  # Import custom User model
 from django.contrib import messages
-from django.shortcuts import redirect
-from allauth.socialaccount.providers.microsoft.views import MicrosoftGraphOAuth2Adapter
+
+
 '''''
 def sign_up(request):
     if request.method == "POST":
