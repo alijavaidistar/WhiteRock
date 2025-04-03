@@ -80,7 +80,7 @@ INSTALLED_APPS = [
 
 ########################
 # for microsoft login start
-SITE_ID = 1  # Change this if necessary
+SITE_ID = 2 # Change this if necessary
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
