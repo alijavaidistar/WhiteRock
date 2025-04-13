@@ -15,4 +15,5 @@ tzdata==2025.1
 
 #C:\Users\ali\AppData\Local\Programs\Python\Python313\python.exe manage.py runserver
 #C:\Users\ali\AppData\Local\Programs\Python\Python313\python manage.py makemigrations
+#C:\Users\ali\AppData\Local\Programs\Python\Python313\python manage.py migrate
 
