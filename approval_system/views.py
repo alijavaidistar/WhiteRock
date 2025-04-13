@@ -25,8 +25,10 @@ def submit_request(request):
             new_request = form.save(commit=False)
             new_request.user = request.user
             new_request.status = 'pending'
+         
 
             # ✅ Exclude file uploads from JSON storage
+            '''
             json_ready_data = {}
             for key, value in form.cleaned_data.items():
                 if not isinstance(value, InMemoryUploadedFile):  # ✅ Ignore file uploads
@@ -34,6 +36,20 @@ def submit_request(request):
 
             # ✅ Store only JSON-serializable data
             new_request.data = json.dumps(json_ready_data)
+            '''
+
+            # ✅ Exclude file uploads and convert dates to strings
+            json_ready_data = {}
+            for key, value in form.cleaned_data.items():
+                if not isinstance(value, InMemoryUploadedFile):
+                    if hasattr(value, 'isoformat'):  # ✅ Convert date/datetime to string
+                        json_ready_data[key] = value.isoformat()
+                    else:
+                        json_ready_data[key] = value
+
+            new_request.data = json.dumps(json_ready_data)
+
+
 
             print("Storing Data:", new_request.data)  # ✅ Debug before saving
 
@@ -46,6 +62,8 @@ def submit_request(request):
 
     else:
         form = RequestForm(initial={'form_name': form_name}, user=request.user)
+        print("🚨 FORM ERRORS:", form.errors)
+        print("🧾 FORM DATA:", request.POST.dict())
 
     return render(request, 'approval_system/submit_request.html', {'form': form, 'form_name': form_name})
 

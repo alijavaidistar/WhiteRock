@@ -121,6 +121,7 @@
 </head>
 <body>
 
+    <!--
     <div class="form-container">
         <h2>Submit Request: {{ form_name }}</h2>
 
@@ -130,6 +131,23 @@
             <button type="submit">Submit Request</button>
         </form>
     </div>
+    -->
+
+    <div class="form-container">
+        <h2>Submit Request: {{ form_name }}</h2>
+    
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+    
+            <!-- ✅ Preserve form_name when submitting -->
+            <input type="hidden" name="form_name" value="{{ form_name }}">
+    
+            {{ form.as_p }}
+    
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+    
 
 </body>
 </html>
