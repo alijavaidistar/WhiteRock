@@ -25,6 +25,7 @@ def submit_request(request):
             new_request = form.save(commit=False)
             new_request.user = request.user
             new_request.status = 'pending'
+            new_request.returned = False 
          
 
             # ✅ Exclude file uploads from JSON storage
