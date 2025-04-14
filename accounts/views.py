@@ -133,8 +133,13 @@ def logout_view(request):
 # The @login_required decorator ensures that the user is authenticated before accessing this view
 @login_required
 def basic_home(request):
+    from approval_system.models import Request
+    # Get user's submitted requests
+    user_requests = Request.objects.filter(user=request.user).order_by('-submitted_at')
+
+
     # Renders the basic home page for authenticated users
-    return render(request, 'accounts/basic_home.html', {'user': request.user})
+    return render(request, 'accounts/basic_home.html', {'user': request.user,'requests': user_requests,})
 
 # The @login_required decorator ensures that the user is authenticated before accessing this view
 @login_required

@@ -28,10 +28,20 @@ def generate_request_pdf(request_id, approved_by=None):
     # Create the PDF
     c = canvas.Canvas(pdf_path, pagesize=letter)
 
+     # ✅ Add Logo on Top of Form
+    logo_path = r"C:\Users\ali\Documents\GitHub\WhiteRock\uhlogo1.png"
+    if os.path.exists(logo_path):
+        c.drawImage(logo_path, x=240, y=760, width=120, height=50, preserveAspectRatio=True, mask='auto')
+    else:
+        print(f"⚠️ Logo not found at: {logo_path}")
+
     # ✅ University Header
     c.setFont("Helvetica-Bold", 18)
     c.setFillColor(red)  # ✅ University of Houston in red
     c.drawCentredString(300, 770, "University of Houston")
+
+
+
 
     c.setFillColor(black)  # ✅ Reset color for black text
     c.setFont("Helvetica", 14)
