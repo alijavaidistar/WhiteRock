@@ -6,6 +6,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User  # Import custom User model
 from django.contrib import messages
+from .models import Unit
 
 
 '''''
@@ -272,3 +273,24 @@ def delete_user(request, user_id):
         messages.success(request, f"Deleted user {user.username}.")
 
     return redirect('/accounts/admin/users/')
+
+
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_http_methods
+
+
+
+@login_required
+@user_passes_test(lambda u: u.role == "admin")
+@require_http_methods(["GET", "POST"])
+def create_unit(request):
+    message = None
+
+    if request.method == "POST":
+        unit_name = request.POST.get("unit_name")
+        if unit_name:
+            Unit.objects.create(name=unit_name)
+            message = f"✅ Unit '{unit_name}' created successfully!"
+
+    return render(request, "accounts/create_unit.html", {"message": message})

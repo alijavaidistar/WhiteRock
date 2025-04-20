@@ -140,6 +140,9 @@
             <li><a href="/admin/"><i class="fas fa-home"></i> Dashboard</a></li>
             <li><a href="/accounts/admin/users/"><i class="fas fa-users"></i> Manage Users</a></li>
             <li><a href="{% url 'admin_requests' %}"><i class="fas fa-file-alt"></i> Manage Requests</a></li>
+            <a href="{% url 'manage_staff_units' %}" class="btn btn-primary">Manage Staff Assignments</a>
+            <a href="{% url 'assign_units' %}" class="btn btn-primary">Assign Requests to Departments</a>
+            <a href="{% url 'create_unit' %}" class="btn btn-primary"> Create New Unit</a>
             <li><a href="/accounts/logout/"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
     </div>

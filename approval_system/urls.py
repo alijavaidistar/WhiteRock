@@ -14,7 +14,8 @@ urlpatterns = [
 '''
 
 from django.urls import path
-from .views import submit_request, request_list, admin_requests, download_pdf, review_request
+from .views import submit_request, request_list, admin_requests, download_pdf, review_request,staff_review_list,assign_units,manage_staff_units
+from . import views
 
 urlpatterns = [
     path('submit/', submit_request, name='submit_request'),
@@ -22,4 +23,11 @@ urlpatterns = [
     path('admin/requests/', admin_requests, name='admin_requests'),
     path('admin/requests/review/<int:request_id>/', review_request, name='review_request'),
     path('requests/download/<int:request_id>/', download_pdf, name='download_pdf'),
+    path("assign-units/", views.assign_units, name="assign_units"),
+    path("staff-requests/", views.staff_review_list, name="staff_requests"),
+    path("staff-requests/", views.staff_requests_view, name="staff_requests"),
+    path("admin/manage-staff/", views.manage_staff_units, name="manage_staff_units"),
+
+
+
 ]

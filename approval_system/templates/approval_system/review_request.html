@@ -184,6 +184,29 @@
         </form>
     </div>
 
+
+    
+    <!-- ✅ NEW: Delegation Section -->
+    <hr style="margin: 30px 0;">
+
+    <div class="delegate-section">
+        <h3>Delegate This Request</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="delegate">
+
+            <label for="delegated_to"><strong>Choose Staff Member:</strong></label>
+            <select name="delegated_to" required>
+                {% for staff in staff_users %}
+                    <option value="{{ staff.id }}">{{ staff.username }} ({{ staff.unit.name }})</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" style="margin-left: 10px;">Delegate</button>
+        </form>
+    </div>
+
 </div>
 
 </body>

@@ -117,8 +117,24 @@ def download_pdf(request, request_id):
 
 
 
+
+
+
+
+
+
+########### 04/20/2025
+def is_admin_or_staff(user):
+    return user.role in ['admin', 'staff']
+
+
+
+from accounts.models import User  # ✅ Make sure this import is at the top
+from django.utils import timezone  # ✅ Also make sure this is imported
+
+
 @login_required
-@user_passes_test(is_admin)
+@user_passes_test(is_admin_or_staff)
 def review_request(request, request_id):
     req = Request.objects.get(id=request_id)
 
@@ -129,31 +145,142 @@ def review_request(request, request_id):
         action = request.POST.get("action")
 
         if action == "approve":
-            # ✅ First, update the request status and save it
             req.status = "approved"
-            req.save()  # ✅ Save to ensure the correct status before PDF generation
+            req.save()
 
-            # ✅ Get admin's full name or username
             approved_by = request.user.get_full_name().strip() or request.user.username
-
-            # ✅ Debugging: Print the admin's name
             print(f"DEBUG: Approved By = {approved_by}")
 
-            # ✅ Generate the PDF with admin's name
             pdf_filename = generate_request_pdf(req.id, approved_by)
-            req.pdf_file = f"request_pdfs/{pdf_filename}"  # Store relative path
-            req.save()  # ✅ Save again after updating the PDF file
+            req.pdf_file = f"request_pdfs/{pdf_filename}"
+            req.save()
 
-            return redirect("admin_requests")
+
+            if request.user.role == "admin":
+                return redirect("admin_requests")
+            else:
+                return redirect("staff_requests")
 
         elif action == "return":
             comments = request.POST.get("comments", "")
             req.comments = comments
             req.status = "returned"
             req.save()
-            return redirect("admin_requests")
 
-    return render(request, "approval_system/review_request.html", {"req": req, "form_data": form_data})
+            if request.user.role == "admin":
+                return redirect("admin_requests")
+            else:
+                return redirect("staff_requests")
+
+        elif action == "delegate":
+            delegated_to_id = request.POST.get("delegated_to")
+            delegated_to = User.objects.get(id=delegated_to_id)
+
+            req.delegated_to = delegated_to
+            req.delegated_by = request.user
+            req.delegated_at = timezone.now()
+            req.save()
+
+            if request.user.role == "admin":
+                return redirect("admin_requests")
+            else:
+                return redirect("staff_requests")
+
+    # Get staff users in the same unit (excluding current assignee if any)
+    staff_users = User.objects.filter(role='staff', unit=req.unit).exclude(id=req.delegated_to_id)
+
+    return render(request, "approval_system/review_request.html", {
+        "req": req,
+        "form_data": form_data,
+        "staff_users": staff_users
+    })
 
 
 
+
+from accounts.models import Unit
+from django.views.decorators.http import require_http_methods
+
+@login_required
+@user_passes_test(is_admin_or_staff)
+@require_http_methods(["GET", "POST"])
+def assign_units(request):
+    print("✅ assign_units view is being triggered")  # ✅ Move this here
+
+    if request.method == "POST":
+        req_id = request.POST.get("request_id")
+        unit_id = request.POST.get("unit_id")
+
+        req = Request.objects.get(id=req_id)
+        unit = Unit.objects.get(id=unit_id)
+        req.unit = unit
+        req.save()
+        return redirect("assign_units")
+
+    unassigned_requests = Request.objects.filter(unit__isnull=True)
+    units = Unit.objects.all()
+
+    return render(request, "approval_system/assign_units.html", {
+        "unassigned_requests": unassigned_requests,
+        "units": units
+    })
+
+
+
+
+
+
+@login_required
+def staff_review_list(request):
+    if request.user.role != "staff":
+        return redirect("request_list")  # basic user fallback
+
+    requests = Request.objects.filter(unit=request.user.unit, status='pending')
+
+
+    return render(request, "approval_system/staff_requests.html", {
+        "requests": requests
+    })
+
+
+
+@login_required
+def staff_requests_view(request):
+    if request.user.role != 'staff':
+        return redirect('request_list')  # basic users get redirected
+
+    requests = Request.objects.filter(unit=request.user.unit)
+
+    return render(request, "approval_system/staff_requests.html", {
+        "requests": requests
+    })
+
+
+
+
+from accounts.models import User, Unit
+from django.views.decorators.http import require_http_methods
+
+@login_required
+@user_passes_test(lambda u: u.role == "admin")
+@require_http_methods(["GET", "POST"])
+def manage_staff_units(request):
+    if request.method == "POST":
+        user_id = request.POST.get("user_id")
+        unit_id = request.POST.get("unit_id")
+
+        staff_user = User.objects.get(id=user_id)
+        unit = Unit.objects.get(id=unit_id)
+
+        staff_user.unit = unit
+        staff_user.save()
+
+        return redirect("manage_staff_units")
+
+    staff_users = User.objects.filter(role="staff")
+    units = Unit.objects.all()
+
+    return render(request, "accounts/manage_staff.html", {
+        "staff_users": staff_users,
+        "units": units
+    })

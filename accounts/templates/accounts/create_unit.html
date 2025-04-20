@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Unit</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background: #f0f0f0; }
+        form { background: white; padding: 20px; border-radius: 6px; max-width: 400px; margin: auto; }
+        input[type="text"], button { padding: 10px; width: 100%; margin-top: 10px; }
+        .message { margin: 20px auto; text-align: center; color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <form method="post">
+        {% csrf_token %}
+        <h2>Create a New Unit</h2>
+        <input type="text" name="unit_name" placeholder="Enter unit name" required>
+        <button type="submit">Create Unit</button>
+    </form>
+
+    {% if message %}
+    <div class="message">{{ message }}</div>
+    {% endif %}
+
+</body>
+</html>
