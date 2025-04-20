@@ -27,6 +27,8 @@ urlpatterns = [
     path("staff-requests/", views.staff_review_list, name="staff_requests"),
     path("staff-requests/", views.staff_requests_view, name="staff_requests"),
     path("admin/manage-staff/", views.manage_staff_units, name="manage_staff_units"),
+    path("admin/dashboard/", views.admin_dashboard, name="admin_dashboard"),
+
 
 
 

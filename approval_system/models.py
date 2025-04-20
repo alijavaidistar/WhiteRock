@@ -45,6 +45,31 @@ class Request(models.Model):
     delegated_at = models.DateTimeField(null=True, blank=True)
 
 
+    approved_by = models.ForeignKey(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name='approved_requests'
+)
+
+    approved_at = models.DateTimeField(null=True, blank=True)
+
+
+
+    returned_by = models.ForeignKey(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name='returned_requests'
+)
+
+    returned_at = models.DateTimeField(null=True, blank=True)
+
+
+
+
 
 
     def __str__(self):

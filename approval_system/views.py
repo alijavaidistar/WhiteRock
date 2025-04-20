@@ -146,7 +146,13 @@ def review_request(request, request_id):
 
         if action == "approve":
             req.status = "approved"
+            req.approved_by = request.user
+            req.approved_at = timezone.now()
             req.save()
+
+            approved_by = request.user.get_full_name().strip() or request.user.username
+            print(f"DEBUG: Approved By = {approved_by}")
+            
 
             approved_by = request.user.get_full_name().strip() or request.user.username
             print(f"DEBUG: Approved By = {approved_by}")
@@ -165,12 +171,15 @@ def review_request(request, request_id):
             comments = request.POST.get("comments", "")
             req.comments = comments
             req.status = "returned"
+            req.returned_by = request.user
+            req.returned_at = timezone.now()
             req.save()
 
             if request.user.role == "admin":
                 return redirect("admin_requests")
             else:
                 return redirect("staff_requests")
+
 
         elif action == "delegate":
             delegated_to_id = request.POST.get("delegated_to")
@@ -283,4 +292,28 @@ def manage_staff_units(request):
     return render(request, "accounts/manage_staff.html", {
         "staff_users": staff_users,
         "units": units
+    })
+
+
+
+
+
+from django.db.models import Count
+from accounts.models import Unit
+
+@login_required
+@user_passes_test(lambda u: u.role == "admin")
+def admin_dashboard(request):
+    from .models import Request
+
+    total_requests = Request.objects.count()
+
+    status_counts = Request.objects.values('status').annotate(count=Count('id'))
+
+    unit_counts = Unit.objects.annotate(request_count=Count('request'))
+
+    return render(request, "approval_system/admin_dashboard.html", {
+        "total_requests": total_requests,
+        "status_counts": status_counts,
+        "unit_counts": unit_counts,
     })

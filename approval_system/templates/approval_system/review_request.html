@@ -207,6 +207,35 @@
         </form>
     </div>
 
+
+
+    <hr style="margin: 30px 0;">
+
+    <h4>Request History</h4>
+
+    <ul>
+        {% if req.approved_by %}
+            <li><strong>Approved by:</strong> {{ req.approved_by.username }} on {{ req.approved_at|date:"F j, Y, g:i A" }}</li>
+        {% endif %}
+    
+        {% if req.returned_by %}
+            <li><strong>Returned by:</strong> {{ req.returned_by.username }} on {{ req.returned_at|date:"F j, Y, g:i A" }}</li>
+            {% if req.comments %}
+                <li><strong>Return Comments:</strong> {{ req.comments }}</li>
+            {% endif %}
+        {% endif %}
+    
+        {% if req.delegated_to %}
+            <li><strong>Delegated to:</strong> {{ req.delegated_to.username }}</li>
+            <li><strong>Delegated by:</strong> {{ req.delegated_by.username }} on {{ req.delegated_at|date:"F j, Y, g:i A" }}</li>
+        {% endif %}
+    
+        {% if not req.approved_by and not req.delegated_to and not req.returned_by %}
+            <li><em>No approval, delegation, or return history yet.</em></li>
+        {% endif %}
+    </ul>
+    
+    
 </div>
 
 </body>
