@@ -8,183 +8,9 @@
     <title>Header | User Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!--<link href="{% static 'css/tailwind.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{% static 'css/secondHome.css' %}">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            background: linear-gradient(135deg, #000000, #764ba2);
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 2vh 4vw;
-            background-color: #f8f9fa;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-left: auto;
-        }
-        .btn-header {
-            padding: 1vh 2vw; /* 1% of viewport height, 2% of viewport width */
-            font-size: 1rem; /* Relative to root font size */
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .btn-how {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-signup {
-            background-color: #28a745;
-            color: white;
-        }
-        .btn-login {
-            background-color: #6c757d;
-            color: white;
-        }
-        .btn-header:hover {
-            opacity: 0.8;
-        }
-        .right-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .random-box {
-            width: 45vw; /* 80% of viewport width */
-            height: 70vh; /* 80% of viewport height */
-            background-color: #ffcc00;
-            background-position: center;
-            position: absolute;
-            top: 54%;
-            left: 25%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #333;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            font-size: 1.2rem; /* Scales with font settings */
-            z-index: 1;
-        }
-
-        .imgdet {
-            width: 100%;  /* Make the image take full width of the box */
-            height: 100%; /* Make the image take full height of the box */
-            object-fit: cover; /* Ensures the image covers the box without distortion */
-            border-radius: 10px; /* Matches the box's border radius */
-            z-index: 1;
-            position: absolute;
-        }
-
-        .overlay-text {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2.25rem;
-            font-weight: bold;
-            color: Black;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-            z-index: 2;
-        }
-
-        .benefitsButton {
-            width: 100%; /* Adjust width for content */
-            height: auto; /* Allow it to adjust based on content */
-            display: flex;
-            justify-content: flex-end; /* Space between benefits and button */
-            align-items: center;
-            padding: 2vw;
-            border-radius: 8px; /* Rounded corners */
-            z-index: 4;
-
-        }
-
-
-        .benefits {
-            position: absolute;
-            top: 50%;
-            left: 27%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
-            padding: 20px;
-            border-radius: 8px;
-            color: white;
-            font-size: 18px;
-            width: 25vw; /* Adjust width for content */
-            height: auto; /* Allow it to adjust based on content */
-            display: flex;
-            flex-direction: column; /* Stack items vertically */
-            justify-content: space-between;
-            z-index: 4;
-        }
-
-        .benefits ul {
-            list-style: none; /* Remove default bullets */
-            padding-left: 0;
-            margin-bottom: 20px; /* Space between list and button */
-        }
-
-        .benefits li {
-            display: flex;
-            align-items: center; /* Centers text vertically */
-            gap: 10px; /* Space between icon and text */
-            font-size: 18px;
-            font-weight: 500;
-            padding: 8px 0; /* Space between each bullet point */
-        }
-
-        .benefits li::before {
-            content: "✔"; /* Checkmark as bullet point */
-            color: yellow; /* Change to match theme */
-            font-size: 20px;
-        }
-
-        .benefits.small-font {
-            font-size: 10px;
-            line-height: 1.0;
-        }
-
-        .random-box-2 {
-            width: 45vw; 
-            height: 70vh; 
-            background-color: #ffcc00;
-            position: absolute;
-            top: 54%;
-            right: 25%;
-            transform: translate(50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-        }
-        .get-started-btn {
-            background-color: yellow;
-            color: black;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            z-index: 4;
-            margin-left: 10%;
-            margin-right: 10%;
-        }
-
-        .get-started-btn:hover {
-            background-color: #ffdb4d; /* Lighter yellow */
-            transform: scale(1.05);
-        }
-    </style>
+    
 </head>
 <body>
 
@@ -195,9 +21,16 @@
             <a href="/accounts/login/" class="btn-header btn-login">Login</a>
         </div>
     </header>
-
+    <div class="grid-container">
+        <div class="grid-item" id="">Box 1</div>
+        <div class="grid-item">Box 2</div>
+        <div class="grid-item">Box 3</div>
+        <div class="grid-item">Box 4</div>
+    </div>
+<!-- This is gonna be used as reference so we can see how to implement a 2x2 grid 
+    <div class="container">
     <div class="random-box">
-        <img class="imgdet" src="{% static 'accounts/my_images/VBimage.jpg' %}">
+        <img class="imgdet" src="{% static 'images/VBimage.jpg' %}">
         <div class="overlay-text">Veterans Benefits</div>
 
         <div class = "benefitsButton">
@@ -214,7 +47,7 @@
     
     
     <div class="random-box-2">
-        <img class="imgdet" src="{% static 'accounts/my_images/Failure.jpeg' %}">
+        <img class="imgdet" src="{% static 'images/Failure.jpeg' %}">
         <div class="overlay-text">Term Withdrawal</div>
         <div class = "benefitsButton">
             <div class="benefits small-font">
@@ -228,6 +61,10 @@
             </div>
         </div>
     </div>
+--> 
+
+
+        
     
 
 </body>

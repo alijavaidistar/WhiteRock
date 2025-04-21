@@ -1,0 +1,85 @@
+.html{
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #000000, #764ba2);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 2vh 4vw;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 140%);
+    grid-template-rows: repeat(2, 140%);
+    justify-content: center;
+    align-content: center;
+    gap: 2%; /* Optional spacing between items */
+    height: 100%; /* Or use flex-grow if parent is flex */
+    width: 100%;
+  }
+  
+  .grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  
+  /* Positioning the items via class */
+  .top-right {
+    grid-area: top-right;
+  }
+  
+  .top-left {
+    grid-area: top-left;
+  }
+  
+  .bottom-right {
+    grid-area: bottom-right;
+  }
+  
+  .bottom-left {
+    grid-area: bottom-left;
+  }
+
+  .btn-header {
+    padding: 1vh 2vw; /* 1% of viewport height, 2% of viewport width */
+    font-size: 1rem; /* Relative to root font size */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.btn-how {
+    background-color: #007bff;
+    color: white;
+}
+.btn-signup {
+    background-color: #28a745;
+    color: white;
+}
+.btn-login {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-header:hover {
+    opacity: 0.8;
+}
+.right-buttons {
+    display: flex;
+    gap: 10px;
+}
