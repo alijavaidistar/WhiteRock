@@ -115,7 +115,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 
-LOGIN_REDIRECT_URL = '/basic/'
+LOGIN_REDIRECT_URL = '/accounts/role_redirect/'
 LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 
 

@@ -152,13 +152,13 @@ def role_based_redirect(request):
     # Redirect based on the user's role
     if user.role == "admin":
         # Redirect admin users to the admin home page
-        return redirect('/accounts/admin_home/')
+        return redirect('/admin/')
     elif user.role == "staff":
         # Redirect staff users to the staff home page
-        return redirect('/accounts/staff_home/')
+        return redirect('/staff/')
     
     # Default redirect for new users or basic role users
-    return redirect('/accounts/basic_home/')  # Redirect to the basic home page
+    return redirect('/basic/')  # Redirect to the basic home page
 
 # The @login_required decorator ensures that the user is authenticated before accessing this view
 @login_required
