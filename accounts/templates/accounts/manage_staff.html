@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Staff Assignments</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background: #f8f8f8; }
+        h2 { margin-bottom: 20px; }
+        table { width: 100%; background: white; border-collapse: collapse; }
+        th, td { padding: 12px; border: 1px solid #ccc; text-align: left; }
+        th { background: #eee; }
+        select, button { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h2>Assign Staff Users to Units</h2>
+
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Current Unit</th>
+            <th>Assign to Unit</th>
+        </tr>
+        {% for user in staff_users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>
+                {% if user.unit %}
+                    {{ user.unit.name }}
+                {% else %}
+                    Unassigned
+                {% endif %}
+            </td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <select name="unit_id" required>
+                        {% for unit in units %}
+                            <option value="{{ unit.id }}" {% if user.unit and unit.id == user.unit.id %}selected{% endif %}>
+                                {{ unit.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Assign</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

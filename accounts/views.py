@@ -6,6 +6,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User  # Import custom User model
 from django.contrib import messages
+from .models import Unit
 
 
 '''''
@@ -181,20 +182,43 @@ def staff_home(request):
 
 @login_required
 def admin_home(request):
-    """Admin Dashboard - Display user statistics"""
-    if request.user.role != "admin":  # Ensure only admins can access
+    """Admin Dashboard - Display user statistics and request summaries"""
+    if request.user.role != "admin":
         return redirect('/accounts/basic_home/')
 
-    # Fetch user statistics
+    from approval_system.models import Request
+    from django.db.models import Count
+    import json
+
     total_users = User.objects.count()
     staff_count = User.objects.filter(role="staff").count()
     admin_count = User.objects.filter(role="admin").count()
 
-    return render(request, 'accounts/admin_home.html', {
+    total_requests = Request.objects.count()
+    status_counts = Request.objects.values('status').annotate(count=Count('id'))
+    unit_counts = Unit.objects.annotate(request_count=Count('request'))
+
+    #  Prepare JSON-safe arrays for Chart.js
+    status_labels = [item['status'].title() for item in status_counts]
+    status_values = [item['count'] for item in status_counts]
+    unit_labels = [unit.name for unit in unit_counts]
+    unit_values = [unit.request_count for unit in unit_counts]
+
+    context = {
         'total_users': total_users,
         'staff_count': staff_count,
         'admin_count': admin_count,
-    })
+        'total_requests': total_requests,
+        'status_counts': status_counts,
+        'unit_counts': unit_counts,
+        'status_labels_json': json.dumps(status_labels),
+        'status_values_json': json.dumps(status_values),
+        'unit_labels_json': json.dumps(unit_labels),
+        'unit_values_json': json.dumps(unit_values),
+    }
+
+    return render(request, 'accounts/admin_home.html', context)
+
 
 
 
@@ -272,3 +296,33 @@ def delete_user(request, user_id):
         messages.success(request, f"Deleted user {user.username}.")
 
     return redirect('/accounts/admin/users/')
+
+
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_http_methods
+
+
+
+@login_required
+@user_passes_test(lambda u: u.role == "admin")
+@require_http_methods(["GET", "POST"])
+def create_unit(request):
+    message = None
+
+    if request.method == "POST":
+        unit_name = request.POST.get("unit_name")
+        if unit_name:
+            Unit.objects.create(name=unit_name)
+            message = f"✅ Unit '{unit_name}' created successfully!"
+
+    return render(request, "accounts/create_unit.html", {"message": message})
+
+
+
+
+
+
+
+
+

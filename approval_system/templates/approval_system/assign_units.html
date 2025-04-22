@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assign Requests to Units</title>
+</head>
+<body>
+  <h2>Assign Requests to Units</h2>
+
+  {% if unassigned_requests %}
+    <table border="1" cellpadding="10" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Form</th>
+          <th>User</th>
+          <th>Assign to Unit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for req in unassigned_requests %}
+        <tr>
+          <td>{{ req.form_name }}</td>
+          <td>{{ req.user.username }}</td>
+          <td>
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="request_id" value="{{ req.id }}">
+              <select name="unit_id" required>
+                {% for unit in units %}
+                    <option value="{{ unit.id }}">{{ unit.name }}</option>
+                {% endfor %}
+            </select>
+              <button type="submit">Assign</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No unassigned requests.</p>
+  {% endif %}
+</body>
+</html>

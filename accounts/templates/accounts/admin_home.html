@@ -140,6 +140,9 @@
             <li><a href="/admin/"><i class="fas fa-home"></i> Dashboard</a></li>
             <li><a href="/accounts/admin/users/"><i class="fas fa-users"></i> Manage Users</a></li>
             <li><a href="{% url 'admin_requests' %}"><i class="fas fa-file-alt"></i> Manage Requests</a></li>
+            <a href="{% url 'manage_staff_units' %}" class="btn btn-primary">Manage Staff Assignments</a>
+            <a href="{% url 'assign_units' %}" class="btn btn-primary">Assign Requests to Departments</a>
+            <a href="{% url 'create_unit' %}" class="btn btn-primary"> Create New Unit</a>
             <li><a href="/accounts/logout/"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
     </div>
@@ -167,8 +170,98 @@
             </div>
         </div>
 
+        <!-- Request Stats by Unit -->
+    <div class="dashboard-stats" style="margin-top: 20px;">
+        <div class="stat-card" style="width: 100%;">
+            <h3>Requests by Department</h3>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Unit</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for unit in unit_counts %}
+                    <tr>
+                        <td>{{ unit.name }}</td>
+                        <td>{{ unit.request_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+        <!-- Charts Section -->
+    <div class="dashboard-stats" style="margin-top: 40px;">
+        <div class="stat-card" style="width: 48%;">
+            <h3>Requests by Status (Pie Chart)</h3>
+            <canvas id="statusChart" width="300" height="300"></canvas>
+        </div>
+
+        <div class="stat-card" style="width: 48%;">
+            <h3>Requests by Department (Bar Chart)</h3>
+            <canvas id="unitChart" width="300" height="300"></canvas>
+        </div>
+    </div>
+
+
+        
+
         <a href="/accounts/logout/" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
+
+
+
+
+    
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // ✅ Chart-safe variables from Django view
+        const statusLabels = JSON.parse('{{ status_labels_json|escapejs }}');
+        const statusValues = JSON.parse('{{ status_values_json|escapejs }}');
+    
+        const unitLabels = JSON.parse('{{ unit_labels_json|escapejs }}');
+        const unitValues = JSON.parse('{{ unit_values_json|escapejs }}');
+    
+        // --- Pie Chart: Requests by Status ---
+        new Chart(document.getElementById('statusChart'), {
+            type: 'pie',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    label: 'Request Status',
+                    data: statusValues,
+                    backgroundColor: ['#3498db', '#2ecc71', '#e67e22', '#e74c3c']
+                }]
+            }
+        });
+    
+        // --- Bar Chart: Requests by Department ---
+        new Chart(document.getElementById('unitChart'), {
+            type: 'bar',
+            data: {
+                labels: unitLabels,
+                datasets: [{
+                    label: 'Requests per Unit',
+                    data: unitValues,
+                    backgroundColor: '#9b59b6'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    </script>
+    
+    
 </body>
 </html>

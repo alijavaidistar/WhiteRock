@@ -1,5 +1,7 @@
 from django.urls import path, include
-from .views import sign_up, login_view, logout_view,role_based_redirect, admin_users_view, change_role, delete_user, deactivate_user
+from .views import sign_up, login_view, logout_view,role_based_redirect, admin_users_view, change_role, delete_user, deactivate_user,create_unit
+from . import views
+
 
 
 
@@ -29,4 +31,6 @@ urlpatterns = [
     path('admin/users/change_role/<int:user_id>/', change_role, name='change_role'),
     path('admin/users/deactivate/<int:user_id>/', deactivate_user, name='deactivate_user'),  # FIX
     path('admin/users/delete/<int:user_id>/', delete_user, name='delete_user'),
+    path("admin/create-unit/", views.create_unit, name="create_unit"),
+
 ]

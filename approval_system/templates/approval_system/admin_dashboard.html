@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 40px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Admin Reporting Dashboard</h1>
+
+    <div class="summary-box">
+        <h2>Total Requests: {{ total_requests }}</h2>
+    </div>
+
+    <div class="summary-box">
+        <h3>Requests by Status:</h3>
+        <table>
+            <tr>
+                <th>Status</th>
+                <th>Count</th>
+            </tr>
+            {% for item in status_counts %}
+            <tr>
+                <td>{{ item.status|title }}</td>
+                <td>{{ item.count }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="summary-box">
+        <h3>Requests by Department:</h3>
+        <table>
+            <tr>
+                <th>Unit</th>
+                <th>Count</th>
+            </tr>
+            {% for unit in unit_counts %}
+            <tr>
+                <td>{{ unit.name }}</td>
+                <td>{{ unit.request_count }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
