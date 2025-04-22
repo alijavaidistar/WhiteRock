@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         body {
-            background: linear-gradient(135deg, #000000, #764ba2);
+            background: linear-gradient(135deg, #dba6a6, #be3641);
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -184,15 +184,37 @@
             background-color: #ffdb4d; /* Lighter yellow */
             transform: scale(1.05);
         }
+        .logo-container {
+    position: absolute;
+    top: 20px;
+    left: 120px;
+}
+
+.logo-container img {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+}
+
+.login-right {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    transform: translateY(-50%); /* Center the image vertically */
+    width: 550px; /* Match the size of the login container */
+    height: auto;
+    border-radius: 12px; /* Same rounded corners as login container */
+}
     </style>
 </head>
 <body>
+    <div class="logo-container">
+        <img src="{% static 'accounts/my_images/uhlogo.png' %}" alt="UH Logo">
+    </div>
 
     <header class="header">
         <!--<a href="#" class="btn-header btn-how">How it Works</a> -->
         <div class="right-buttons">
-            <a href="/accounts/sign-up/" class="btn-header btn-signup">Sign Up</a>
-            <a href="/accounts/login/" class="btn-header btn-login">Login</a>
+            <a href="{% provider_login_url 'microsoft' %}" class="btn-header btn-signup">Access Portal</a>
         </div>
     </header>
 

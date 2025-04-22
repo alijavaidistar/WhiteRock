@@ -119,7 +119,7 @@ def logout_view(request):
     logout(request)
 
     # Redirect the user to the login page after logging them out
-    return redirect('/accounts/login/')  # Redirect to the login page
+    return redirect('/')  # Redirect to the login page
 
 
 
