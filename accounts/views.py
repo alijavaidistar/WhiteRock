@@ -7,6 +7,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from .models import User  # Import custom User model
 from django.contrib import messages
 from .models import Unit
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import LoginRecord
 
 
 '''''
@@ -296,6 +299,11 @@ def delete_user(request, user_id):
         messages.success(request, f"Deleted user {user.username}.")
 
     return redirect('/accounts/admin/users/')
+
+@login_required
+def user_activity(request):
+    records = LoginRecord.objects.filter(user=request.user).order_by('-timestamp')
+    return render(request, 'accounts/user_activity.html', {'records': records})
 
 
 

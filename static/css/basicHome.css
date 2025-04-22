@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
+    color: #333;
+  }
+
+  .full-dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .header {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+    overflow: auto;
+  }
+
+  .left-panel, .right-panel {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .left-panel {
+    width: 30%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .right-panel {
+    flex: 1;
+  }
+
+  .user-badge {
+    background: #3498db;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .user-info-box, .request-form-box {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .request-form-box select, .request-form-box button {
+    margin-top: 10px;
+  }
+
+  .btn-view, .btn-logout {
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  .btn-view {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .btn-view:hover {
+    background-color: #218838;
+  }
+
+  .btn-logout {
+    background-color: #e74c3c;
+    color: white;
+  }
+
+  .btn-logout:hover {
+    background-color: #c0392b;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  th, td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 992px) {
+    .main-content {
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .left-panel {
+      width: 100%;
+    }
+  }
