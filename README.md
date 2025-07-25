@@ -52,6 +52,8 @@ mysql> select * from users;
 # Exit
 mysql> exit
 ```
+# Run with Docker
+
 Prerequisites
 make sure you have the following installed:
 - [Docker](https://docs.docker.com/)
