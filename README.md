@@ -30,7 +30,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python manage.py runserver
-
+)
 # Install MySQL CLI
 sudo apt install mysql-server
 
@@ -63,4 +63,4 @@ docker-compose exec web python manage.py migrate
 
 # (Optional) Create a superuser
 docker-compose exec web python manage.py createsuperuser
-
+)
