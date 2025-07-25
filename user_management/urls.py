@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from accounts.views import basic_home, staff_home, admin_home
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.shortcuts import render
 
 def home(request):

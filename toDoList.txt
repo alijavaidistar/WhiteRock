@@ -1,3 +1,25 @@
-Finish the Home page
--> Have two boxes with images related to what the box will talk about
--> Create a better header
+
+What should you know 
+
+1. Apps -> small pieces of a project togather makes up the app.
+
+    - App each app can be a certain category of data with its own logic, html, etc
+
+2. Views -> When you run a url, that specific segment, will let django know what "view" to run with some sort of data.
+    The file will most likely be -> HTML or JSON.
+
+There are two different types of views, which are
+class based views
+function based views
+
+3. Routing -> urlpattern has the path of the url, and the associated view for that path.
+
+4. Template Language -> django.templating.Language
+
+5. Models -> Create a class that creates a tables
+
+6. django ORM -> get() all() filter()
+
+7. Django Admin Panel
+
+
