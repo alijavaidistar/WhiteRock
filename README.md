@@ -5,7 +5,7 @@ Group Repository for COSC 4353 Software Design
 ## Run Locally
 These are instructions for WSL but the process should be similar for Mac/Linux systems.
 
-print(
+```
 # Open Powershell and enter WSL
 wsl
 
@@ -30,7 +30,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python manage.py runserver
-)
+```
 # Install MySQL CLI
 sudo apt install mysql-server
 
