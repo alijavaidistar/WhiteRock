@@ -31,23 +31,32 @@ source venv/bin/activate
 pip install -r requirements.txt
 python manage.py runserver
 ```
-# Install MySQL CLI
+
+# Query Database
+These are instructions for WSL to connect to the database and run queries. The process should be similar for Mac/Linux Systems.
+```
+# Install MySQL cli
 sudo apt install mysql-server
 
 # Connect to the database
-mysql --host=whiterockdb.mysql.database.azure.com --user=<USER> --password=<PASSWORD> --port=3306 --database=mjapp
+ mysql --host=moosejawdb.mysql.database.azure.com --user=<USER> --password=<PASSWORD> --port=3306 --database=mjapp
+ 
+# List dbs, tables, and columns
+mysql> show databases;
+mysql> show tables;
+mysql> show columns from users;
 
-
-# Clone the repository
-git clone git@github.com:alijavaidistar/WhiteRock.git
-cd WhiteRock
-
+# Run query
+mysql> select * from users;
+ 
+# Exit
+mysql> exit
+```
 Prerequisites
 make sure you have the following installed:
 - [Docker](https://docs.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 - Git
-
 ```
 # 1. Clone the repository
 git clone https://github.com/alijavaidistar/WhiteRock
