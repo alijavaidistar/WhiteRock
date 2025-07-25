@@ -19,9 +19,9 @@ sudo apt install python3-pip
 sudo apt install python3-django
 sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
 
-TENANT_ID=7ce5bdd5-fdda-44b4-a37d-c69818c0d01a
-CLIENT_ID=fa2e1d80-7b4a-4d99-8c42-b8075affdd93
-CLIENT_SECRET=<GET_FROM_christaO2>
+TENANT_ID=170bbabd-a2f0-4c90-ad4b-0e8f0f0c4259
+CLIENT_ID=92088f70-53f7-4321-a0af-85f9463af0c0
+CLIENT_SECRET=Get it from mominnaim
 
 export DB_USER=<YOUR_USERNAME>
 export DB_PASSWORD=<YOUR_PASSWORD>
@@ -48,8 +48,7 @@ make sure you have the following installed:
 - [Docker Compose](https://docs.docker.com/compose/)
 - Git
 
-print(
-
+```
 # 1. Clone the repository
 git clone https://github.com/alijavaidistar/WhiteRock
 cd White Rock
@@ -63,4 +62,4 @@ docker-compose exec web python manage.py migrate
 
 # (Optional) Create a superuser
 docker-compose exec web python manage.py createsuperuser
-)
+```
